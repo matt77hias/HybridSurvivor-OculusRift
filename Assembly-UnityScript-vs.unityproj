@@ -46,19 +46,19 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Flashlight\Flashlight.js" />
      <Compile Include="Assets\Hide mouse script\Mouse.js" />
-     <Compile Include="Assets\Other scripts\Delay effect.js" />
      <Compile Include="Assets\Pack footsteps-crosshair\script\Crosshair.js" />
      <Compile Include="Assets\Pack footsteps-crosshair\script\Footsteps.js" />
      <Compile Include="Assets\Pack footsteps-crosshair\script\HideMouseCursor.js" />
      <Compile Include="Assets\Pack footsteps-crosshair\script\Stop anim.js" />
      <Compile Include="Assets\Pack footsteps-crosshair\script\cursor false.js" />
      <Compile Include="Assets\Pack footsteps-crosshair\script\play anim.js" />
-     <Compile Include="Assets\Papers\Inventory.js" />
+     <Compile Include="Assets\Player\Flashlight\Flashlight.js" />
      <Compile Include="Assets\Scripts\BasicSlenderTeleport.js" />
      <Compile Include="Assets\Scripts\Change color.js" />
      <Compile Include="Assets\Scripts\Click Sound.js" />
+     <Compile Include="Assets\Scripts\Delay effect.js" />
+     <Compile Include="Assets\Scripts\KeyInventory.js" />
      <Compile Include="Assets\Scripts\Menu Script.js" />
      <Compile Include="Assets\Scripts\Menu script 2.js" />
      <Compile Include="Assets\Scripts\Switch Light.js" />
