@@ -75,6 +75,7 @@
      <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\Tonemapping.js" />
      <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\Triangles.js" />
      <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\Vignetting.js" />
+     <Compile Include="Assets\Standard Assets\Particles\Legacy Particles\TimedObjectDestructor.js" />
      <Compile Include="Assets\Standard Assets\Scripts\Camera Scripts\MouseOrbit.js" />
      <Compile Include="Assets\Standard Assets\Scripts\Camera Scripts\SmoothFollow.js" />
      <Compile Include="Assets\Standard Assets\Scripts\Camera Scripts\SmoothLookAt.js" />
@@ -90,6 +91,7 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\VignetteShader.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\DepthOfFieldScatter.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\MotionBlur.shader" />
+     <None Include="Assets\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\GlowCompose.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\Contrast Stretch\MinMaxReduction.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_Antialiasing\SSAA.shader" />
