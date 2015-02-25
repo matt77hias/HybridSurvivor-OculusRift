@@ -54,6 +54,7 @@
      <Compile Include="Assets\Pack footsteps-crosshair\script\cursor false.js" />
      <Compile Include="Assets\Pack footsteps-crosshair\script\play anim.js" />
      <Compile Include="Assets\Player\Flashlight\Flashlight.js" />
+     <Compile Include="Assets\Rain\rain\script\rainscript.js" />
      <Compile Include="Assets\Scripts\BasicSlenderTeleport.js" />
      <Compile Include="Assets\Scripts\Change color.js" />
      <Compile Include="Assets\Scripts\Click Sound.js" />
