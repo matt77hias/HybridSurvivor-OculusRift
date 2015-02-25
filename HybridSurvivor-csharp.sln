@@ -5,6 +5,8 @@ Project("{785C558E-B2EE-6CB5-C3C7-FC5F9A5E5ABB}") = "HybridSurvivor", "Assembly-
 EndProject
 Project("{785C558E-B2EE-6CB5-C3C7-FC5F9A5E5ABB}") = "HybridSurvivor", "Assembly-CSharp-vs.csproj", "{2307E84C-DA57-00C7-B06D-6E214437F855}"
 EndProject
+Project("{785C558E-B2EE-6CB5-C3C7-FC5F9A5E5ABB}") = "HybridSurvivor", "Assembly-CSharp-Editor-vs.csproj", "{0763972F-89F5-56D6-F02E-82378C79B7AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,11 +21,15 @@ Global
 		{2307E84C-DA57-00C7-B06D-6E214437F855}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2307E84C-DA57-00C7-B06D-6E214437F855}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2307E84C-DA57-00C7-B06D-6E214437F855}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0763972F-89F5-56D6-F02E-82378C79B7AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0763972F-89F5-56D6-F02E-82378C79B7AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0763972F-89F5-56D6-F02E-82378C79B7AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0763972F-89F5-56D6-F02E-82378C79B7AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																																																GlobalSection(MonoDevelopProperties) = preSolution
+																																																			GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
