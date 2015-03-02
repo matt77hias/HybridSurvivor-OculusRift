@@ -13,7 +13,7 @@ public class PowerCellInventory : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		charge = 0;
+		charge = 5;
 		chargeHudGUI.enabled = true;
 	}
 	
