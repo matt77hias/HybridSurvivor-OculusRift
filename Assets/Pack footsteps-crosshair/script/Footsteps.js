@@ -1,7 +1,7 @@
 var forest : AudioClip[];
 var wood : AudioClip[];
 
-var lunghezzaPausa : float;
+var pause : float;
 
 var step : boolean;
 var player : Transform;
@@ -31,7 +31,7 @@ function playForestSound () {
 	audio.clip = forest[Random.Range(0, forest.Length)];
 	audio.volume = 1;
 	audio.Play();
-	yield WaitForSeconds (lunghezzaPausa);
+	yield WaitForSeconds (pause);
 	step = true;
 }
 
@@ -40,6 +40,6 @@ function playWoodSound () {
 	audio.clip = wood[Random.Range(0, wood.Length)];
 	audio.volume = 1;
 	audio.Play();
-	yield WaitForSeconds (lunghezzaPausa);
+	yield WaitForSeconds (pause);
 	step = true;
 }
