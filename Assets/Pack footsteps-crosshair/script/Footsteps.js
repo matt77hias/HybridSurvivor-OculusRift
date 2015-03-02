@@ -16,17 +16,17 @@ function Update () {
 		if(Input.GetAxis("Vertical") || Input.GetAxis("Horizontal")) {
 			if(player.GetComponent(CharacterController).isGrounded) {
 				if(hit.transform.tag == "Forest" && step) {
-					CamminaSuForest();
+					playForestSound();
 				}
 				if(hit.transform.tag == "Wood" && step) {
-					CamminaSuWood();
+					playWoodSound();
 				}
 			}
 		}
 	}
 }
 
-function CamminaSuForest () {
+function playForestSound () {
 	step = false;
 	audio.clip = forest[Random.Range(0, forest.Length)];
 	audio.volume = 1;
@@ -35,7 +35,7 @@ function CamminaSuForest () {
 	step = true;
 }
 
-function CamminaSuWood () {
+function playWoodSound () {
 	step = false;
 	audio.clip = wood[Random.Range(0, wood.Length)];
 	audio.volume = 1;
