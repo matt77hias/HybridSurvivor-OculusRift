@@ -1,4 +1,4 @@
 
-function OnMouseEnter() { renderer.material.color = Color.red; }
+function OnMouseEnter() { GetComponent.<Renderer>().material.color = Color.red; }
 
-function OnMouseExit() { renderer.material.color = Color.white; }
+function OnMouseExit() { GetComponent.<Renderer>().material.color = Color.white; }

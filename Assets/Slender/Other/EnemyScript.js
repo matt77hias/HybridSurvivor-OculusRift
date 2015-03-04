@@ -71,7 +71,7 @@ function Update()
 			// play sound only when the Man is first sighted
 			if ( !hasPlayedSeenSound )
 			{
-				audio.PlayClipAtPoint( enemySightedSFX, thePlayer.position ); 
+				GetComponent.<AudioSource>().PlayClipAtPoint( enemySightedSFX, thePlayer.position ); 
 			}
 			hasPlayedSeenSound = true; // sound has now played
 		}
@@ -155,7 +155,7 @@ function MoveEnemy()
 	// if not too close, move
 	if ( !isInRange )
 	{
-		rigidbody.velocity = Vector3( 0, rigidbody.velocity.y, 0 ); // maintain gravity
+		GetComponent.<Rigidbody>().velocity = Vector3( 0, GetComponent.<Rigidbody>().velocity.y, 0 ); // maintain gravity
 		
 		// --
 		// Old Movement
@@ -195,7 +195,7 @@ function StopEnemy()
 {
 	transform.LookAt( thePlayer );
 	
-	rigidbody.velocity = Vector3.zero;
+	GetComponent.<Rigidbody>().velocity = Vector3.zero;
 }
 
 

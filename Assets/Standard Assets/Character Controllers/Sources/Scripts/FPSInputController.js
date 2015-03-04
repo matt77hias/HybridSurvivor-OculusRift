@@ -29,8 +29,8 @@ function Update () {
 	}
 	
 	// Apply the direction to the CharacterMotor
-	//motor.inputMoveDirection = transform.rotation * directionVector;
-	motor.inputMoveDirection = ovrCamera.transform.rotation * directionVector;
+	motor.inputMoveDirection = transform.rotation * directionVector;
+	//motor.inputMoveDirection = ovrCamera.transform.rotation * directionVector;
 	motor.inputJump = Input.GetButton("Jump");
 }
 

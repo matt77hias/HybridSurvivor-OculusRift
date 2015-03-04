@@ -1,5 +1,5 @@
 
 function Update () {
-Screen.showCursor = false; 
+Cursor.visible = false; 
 }
  

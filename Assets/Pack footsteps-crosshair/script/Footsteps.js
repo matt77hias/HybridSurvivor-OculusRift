@@ -28,18 +28,18 @@ function Update () {
 
 function playForestSound () {
 	step = false;
-	audio.clip = forest[Random.Range(0, forest.Length)];
-	audio.volume = 1;
-	audio.Play();
+	GetComponent.<AudioSource>().clip = forest[Random.Range(0, forest.Length)];
+	GetComponent.<AudioSource>().volume = 1;
+	GetComponent.<AudioSource>().Play();
 	yield WaitForSeconds (pause);
 	step = true;
 }
 
 function playWoodSound () {
 	step = false;
-	audio.clip = wood[Random.Range(0, wood.Length)];
-	audio.volume = 1;
-	audio.Play();
+	GetComponent.<AudioSource>().clip = wood[Random.Range(0, wood.Length)];
+	GetComponent.<AudioSource>().volume = 1;
+	GetComponent.<AudioSource>().Play();
 	yield WaitForSeconds (pause);
 	step = true;
 }

@@ -3,10 +3,10 @@ var soundhover : AudioClip;
 var beep : AudioClip;
 var QuitButton : boolean = false;
 function OnMouseEnter(){
-audio.PlayOneShot(soundhover);
+GetComponent.<AudioSource>().PlayOneShot(soundhover);
 }
 function OnMouseUp(){
-audio.PlayOneShot(beep);
+GetComponent.<AudioSource>().PlayOneShot(beep);
 yield new WaitForSeconds(0.35);
 if(QuitButton){
 Application.Quit();

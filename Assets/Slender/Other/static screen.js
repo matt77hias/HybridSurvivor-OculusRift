@@ -73,7 +73,7 @@ function Startup()
     }
     cameraTransform = theCamera.transform;
  
-    theMaterial = gameObject.renderer.material;
+    theMaterial = gameObject.GetComponent.<Renderer>().material;
     theMaterial.color = Color.white;
  
     if ( !mesh )

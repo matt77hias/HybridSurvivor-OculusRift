@@ -24,14 +24,14 @@ function Update ()
     }
     if (Vector3.Distance(transform.position, player.position) <= distanceToPlayer)
     {
-         if (audio && audio.clip && !audio.isPlaying)     // play the audio if it isn't playing
-              audio.Play();
+         if (GetComponent.<AudioSource>() && GetComponent.<AudioSource>().clip && !GetComponent.<AudioSource>().isPlaying)     // play the audio if it isn't playing
+              GetComponent.<AudioSource>().Play();
          nearPlayer = true;
     }
     else
     {
-         if (audio)
-            audio.Stop();
+         if (GetComponent.<AudioSource>())
+            GetComponent.<AudioSource>().Stop();
          nearPlayer = false;
     }
 }
