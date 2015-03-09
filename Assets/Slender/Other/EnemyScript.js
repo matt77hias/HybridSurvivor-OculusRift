@@ -1,4 +1,3 @@
-/// created by MasterDevelopers ///
 #pragma strict
 @script RequireComponent( AudioSource )
 

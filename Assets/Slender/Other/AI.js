@@ -1,4 +1,3 @@
-/// created by MasterDevelopers ///
 #pragma strict
 
 var target : Transform;
