@@ -1,18 +1,33 @@
-var levelToLoad : String;
-var soundhover : AudioClip;
 var beep : AudioClip;
-var QuitButton : boolean = false;
-function OnMouseEnter(){
-GetComponent.<AudioSource>().PlayOneShot(soundhover);
+
+var pressed : boolean;
+
+function Start() {
+	pressed = false;
 }
-function OnMouseUp(){
-GetComponent.<AudioSource>().PlayOneShot(beep);
-yield new WaitForSeconds(0.35);
-if(QuitButton){
-Application.Quit();
+
+function Update() {
+	if (!pressed && Input.GetKeyDown(KeyCode.Return)) {
+	   pressed = true;
+	   Load_Scene();
+	}
+	if (!pressed && Input.GetKeyDown(KeyCode.Escape)) {
+	   pressed = true;
+	   Quit_Scene();
+	}
+	
 }
-else{
-Application.LoadLevel("Main Menu");
+
+function Load_Scene() {
+	GetComponent.<AudioSource>().PlayOneShot(beep);
+	yield new WaitForSeconds(0.35);
+	Application.LoadLevel("Scene");
 }
+
+function Quit_Scene() {
+	GetComponent.<AudioSource>().PlayOneShot(beep);
+	yield new WaitForSeconds(0.35);
+	Application.LoadLevel("Main Menu");
 }
+
 @script RequireComponent(AudioSource)

@@ -4,11 +4,10 @@ var pressed : boolean;
 
 function Start() {
 	pressed = false;
-	Load_Scene();
 }
 
 function Update() {
-	if (!pressed && Input.GetKeyDown("enter")) {
+	if (!pressed && Input.GetKeyDown(KeyCode.Return)) {
 	   pressed = true;
 	   Load_Scene();
 	}
