@@ -35,3 +35,8 @@ function Update ()
          nearPlayer = false;
     }
 }
+
+function OnCollisionEnter(collision : Collision) {
+	transform.position = Vector3( Random.Range(spawnOrgin.x, maximum.x), Random.Range(spawnOrgin.y, maximum.y), Random.Range(spawnOrgin.z, maximum.z) );   // teleport
+    nextTeleport += spawnRate;    // update the next time to teleport
+}
