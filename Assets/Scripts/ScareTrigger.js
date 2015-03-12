@@ -33,9 +33,11 @@ function Update () {
 }
 
 function OnTriggerEnter(other : Collider) {
-	enterTrigger = true;
-	startTime = Time.time;
-	endPos = player.transform.position;
-	distance = Vector3.Distance(startPos, endPos);
-	face.GetComponent.<Renderer>().enabled = true;
+	if (hasPlayed == false) {
+		enterTrigger = true;
+		startTime = Time.time;
+		endPos = player.transform.position;
+		distance = Vector3.Distance(startPos, endPos);
+		face.GetComponent.<Renderer>().enabled = true;
+	}
 }
