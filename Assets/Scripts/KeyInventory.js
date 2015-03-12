@@ -28,7 +28,7 @@
      
     function UpdateText() {
 	    if (keys < nb_keys) {
-    		keyText.SetText(keys.ToString() + " Keys");
+    		keyText.SetText("      " + keys.ToString() + " Keys");
     	} else {
     		keyText.SetText("All Keys Collected!");
     	}
