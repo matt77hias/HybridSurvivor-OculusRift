@@ -26,7 +26,7 @@ function Update () {
 		face.transform.position = Vector3.Lerp(startPos, endPos, fracJourney);
 		
 		if (fracJourney > 1.0) {
-			face.GetComponent.<Renderer>().enabled = false;
+			DestroyObject (face);
 			hasPlayed = true;
 		}
 	}
