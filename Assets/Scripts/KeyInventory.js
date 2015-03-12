@@ -1,5 +1,7 @@
     
     var theEnemy : EnemyScript;
+    
+    var keyText : KeyText;
     var keys = 0;
     var nb_keys = 3;
      
@@ -10,6 +12,11 @@
     	if (theEnemy == null) {
     		theEnemy = GameObject.Find( "Enemy" ).GetComponent( EnemyScript );
     	}
+    	
+    	if (keyText == null) {
+    		keyText = GameObject.Find( "Keys Text" ).GetComponent( KeyText );
+    	}
+    	UpdateText();
     }
      
      
@@ -19,11 +26,10 @@
     }
      
      
-    function OnGUI() {
+    function UpdateText() {
 	    if (keys < nb_keys) {
-	    	GUI.Box(Rect((Screen.width * 0.5) - 60, 10, 120, 25), "" + keys.ToString() + " Keys");
-	    } else {
-	    	GUI.Box(Rect((Screen.width/2)-100, 10, 200, 35), "All Keys Collected!");
-	    	//Application.LoadLevel( "Main Menu" );
-	    }
+    		keyText.SetText(keys.ToString() + " Keys");
+    	} else {
+    		keyText.SetText("All Keys Collected!");
+    	}
     }
