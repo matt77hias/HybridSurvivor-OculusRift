@@ -1,7 +1,7 @@
     //- Roam whenever the player is not seen by SM, and the player is not facing SM
     //- Move towards the player whenever player is seen by SM (not necessarily the player seeing him back), and the player is not facing SM
     //- Teleport to a legal position within a maximum and minimum range when:
-    ///--- A. SM moves outside of the maximum range
+    //--- A. SM moves outside of the maximum range
     //--- B. SM roams for a random amount of time without seeing the player
     //--- C. The player is facing him (but does not see him), a random amount of time has passed, and there is still a chance he will not teleport at all
      

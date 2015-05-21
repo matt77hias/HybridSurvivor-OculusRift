@@ -4,32 +4,49 @@
 public var thePlayer : Transform;
 private var theEnemy : Transform;
 
-public var speed : float = 5.0;
+public var speed : float = 0.7;
 
 var isOffScreen : boolean = false;
 public var offscreenDotRange : float = 0.7;
 
-var isVisible : boolean = false;
-public var visibleDotRange : float = 0.8; // ** between 0.75 and 0.85 (originally 0.8172719) 
+var isVisible : boolean = false; // Whether the player is visible to Slender.
+// public var visibleDotRange : float = 0.75; // ** between 0.75 and 0.85 (originally 0.8172719) 
 
-var isInRange : boolean = false;
+public var followDistance : float = 2.0; // Slender will come closer towards you until this distance is reached. 
 
-public var followDistance : float = 24.0;
-public var maxVisibleDistance : float = 25.0;
+public var maxVisibleDistance : float = 30.0; // You can see slender and possible be hit (not hard) by him as long as you are within this distance.
 
-public var reduceDistAmt : float = 1.1;
+public var maxHittingDistance : float = 8; // Slender can hit you (hard) as long as you are within this distance.
 
 private var sqrDist : float = 0.0;
 
 public var health : float = 100.0;
-public var damage : float = 20.0;
 
-public var enemySightedSFX : AudioClip;
+public var damageFromDistance : float = 10.0;
+public var damageFromNearby : float = 30.0;
 
-private var hasPlayedSeenSound : boolean = false;
+public var isVeryClose : boolean = false; // Very close is defined by the followDistance.
+
+public var isNearby : boolean = false; // Nearby is defined by the maxHittingDistance.
+
+public var isInRange : boolean = false; // In range is defined by the maxVisibleDistance.
+
+// VeryClose > Nearby > InRange
+
+public var enemySpottedSFX : AudioClip;
+
+public var enemyHittingSFX: AudioClip;
+
+private var hasPlayedSpottedSound : boolean = false;
 
 private var colDist : float = 5.0; // raycast distance in front of enemy when checking for obstacles
 
+public var isGrounded : boolean = false;
+
+// 'Combat' Mechanism:
+// Slender sees Player and Player sees Slender => Player gets hit.
+// Slender doesn't see Player and Player doesn't see Sleder => Player gets healed.
+// Slender sees Player and Player doesn't see Slender (running away from it) => Player doesn't get hit nor gets healed.
 
 function Start() 
 {
@@ -43,6 +60,8 @@ function Start()
 
 function Update() 
 {
+	CheckMaxVisibleRange();
+	IsGrounded();
 	// Movement : check if out-of-view, then move
 	CheckIfOffScreen();
 	
@@ -51,8 +70,29 @@ function Update()
 	{
 		MoveEnemy();
 		
-		// restore health
-		RestoreHealth();
+		// check if Player is seen
+		CheckIfVisible();
+		
+		// Only restore health is the Player is not seen by Slender any more.
+		if ( !isVisible ) 
+		{
+			// restore health
+			RestoreHealth();	
+		}
+		
+		// reset hasPlayedSpottedSound for next time isVisible first occurs
+		hasPlayedSpottedSound = false;
+			
+		/*else 
+		{
+			// This is the sound you hear when you are visible to Slender.
+			if ( !hasPlayedSpottedSound )
+			{
+				GetComponent.<AudioSource>().PlayClipAtPoint( enemySpottedSFX, thePlayer.position ); 
+			}
+			hasPlayedSpottedSound = true; // sound has now played
+		}*/
+
 	}
 	else
 	{
@@ -67,20 +107,20 @@ function Update()
 			// stop moving
 			StopEnemy();
 			
-			// play sound only when the Man is first sighted
-			if ( !hasPlayedSeenSound )
+			// This is the sound you hear when you are visible to Slender.
+			if ( !hasPlayedSpottedSound )
 			{
-				GetComponent.<AudioSource>().PlayClipAtPoint( enemySightedSFX, thePlayer.position ); 
+				GetComponent.<AudioSource>().PlayClipAtPoint( enemySpottedSFX, thePlayer.position ); 
 			}
-			hasPlayedSeenSound = true; // sound has now played
+			hasPlayedSpottedSound = true; // sound has now played
 		}
 		else
 		{
 			// check max range
-			CheckMaxVisibleRange();
+			CheckMaxHittingRange();
 			
 			// if far away then move, else stop
-			if ( !isInRange )
+			if ( !isNearby )
 			{
 				MoveEnemy();
 			}
@@ -89,8 +129,11 @@ function Update()
 				StopEnemy();
 			}
 			
-			// reset hasPlayedSeenSound for next time isVisible first occurs
-			hasPlayedSeenSound = false;
+			// restore health
+			RestoreHealth();
+			
+			// reset hasPlayedSpottedSound for next time isVisible first occurs
+			hasPlayedSpottedSound = false;
 		}
 	}
 	
@@ -99,9 +142,18 @@ function Update()
 
 function DeductHealth() 
 {
-	// deduct health
-	health -= damage * Time.deltaTime;
+	CheckMaxHittingRange();
 	
+	// deduct health
+	if ( isNearby )
+	{
+		health -= damageFromNearby * Time.deltaTime;
+		GetComponent.<AudioSource>().PlayClipAtPoint( enemyHittingSFX, thePlayer.position );
+	}
+	else 
+	{
+		health -= damageFromDistance * Time.deltaTime;
+	}
 	// check if no health left
 	if ( health <= 0.0 )
 	{
@@ -116,9 +168,16 @@ function DeductHealth()
 
 function RestoreHealth() 
 {
-	// deduct health
-	health += damage * Time.deltaTime;
-	
+	CheckMaxHittingRange();
+	// restore health
+	if ( isNearby )
+	{
+		health += damageFromNearby * Time.deltaTime;
+	}
+	else 
+	{
+		health += damageFromDistance * Time.deltaTime;
+	}
 	// check if no health left
 	if ( health >= 100.0 )
 	{
@@ -130,7 +189,8 @@ function RestoreHealth()
 
 function CheckIfOffScreen() 
 {
-	var fwd : Vector3 = thePlayer.forward.normalized;
+	//var fwd : Vector3 = thePlayer.forward.normalized;
+	var fwd : Vector3 = GameObject.Find("RightEyeAnchor").transform.forward.normalized;
 	var other : Vector3 = (theEnemy.position - thePlayer.position).normalized;
 	
 	var theProduct : float = Vector3.Dot( fwd, other );
@@ -148,44 +208,49 @@ function CheckIfOffScreen()
 
 function MoveEnemy() 
 {
-	// Check the Follow Distance
-	CheckDistance();
+
 	
-	// if not too close, move
-	if ( !isInRange )
-	{
-		GetComponent.<Rigidbody>().velocity = Vector3( 0, GetComponent.<Rigidbody>().velocity.y, 0 ); // maintain gravity
+	if ( isInRange ) {
+	
+		// Check the Follow Distance
+		CheckFollowDistance();
 		
-		// --
-		// Old Movement
-		//transform.LookAt( thePlayer );		
-		//transform.position += transform.forward * speed * Time.deltaTime;
-		// --
-		
-		// New Movement - with obstacle avoidance
-		var dir : Vector3 = ( thePlayer.position - theEnemy.position ).normalized;
-		var hit : RaycastHit;
-		
-		if ( Physics.Raycast( theEnemy.position, theEnemy.forward, hit, colDist ) )
+		// if not too close, move
+		if ( !isVeryClose )
 		{
-			//Debug.Log( " obstacle ray hit " + hit.collider.gameObject.name );
-			if ( hit.collider.gameObject.name != "Player" && hit.collider.gameObject.name != "Terrain" )
-			{			
-				dir += hit.normal * 20;
+			GetComponent.<Rigidbody>().velocity = Vector3( 0, GetComponent.<Rigidbody>().velocity.y, 0 ); // maintain gravity
+			
+			// --
+			// Old Movement
+			//transform.LookAt( thePlayer );		
+			//transform.position += transform.forward * speed * Time.deltaTime;
+			// --
+			
+			// New Movement - with obstacle avoidance
+			var dir : Vector3 = ( thePlayer.position - theEnemy.position ).normalized;
+			var hit : RaycastHit;
+			
+			if ( Physics.Raycast( theEnemy.position, theEnemy.forward, hit, colDist ) )
+			{
+				//Debug.Log( " obstacle ray hit " + hit.collider.gameObject.name );
+				if ( hit.collider.gameObject.name != "Player" && hit.collider.gameObject.name != "Terrain" )
+				{			
+					dir += hit.normal * 20;
+				}
 			}
-		}
-	
-		var rot : Quaternion = Quaternion.LookRotation( dir );
-	
-		theEnemy.rotation = Quaternion.Slerp( theEnemy.rotation, rot, Time.deltaTime );
-		theEnemy.position += theEnemy.forward * speed * Time.deltaTime;
-		//theEnemy.rigidbody.velocity = theEnemy.forward * speed; // Not Working
 		
-		// --
-	}
-	else
-	{
-		StopEnemy();
+			var rot : Quaternion = Quaternion.LookRotation( dir );
+		
+			theEnemy.rotation = Quaternion.Slerp( theEnemy.rotation, rot, Time.deltaTime );
+			theEnemy.position += theEnemy.forward * speed * Time.deltaTime;
+			//theEnemy.rigidbody.velocity = theEnemy.forward * speed; // Not Working
+			
+			// --
+		}
+		else
+		{
+			StopEnemy();
+		}
 	}
 }
 
@@ -200,32 +265,33 @@ function StopEnemy()
 
 function CheckIfVisible() 
 {
-	var fwd : Vector3 = thePlayer.forward.normalized;
-	var other : Vector3 = ( theEnemy.position - thePlayer.position ).normalized;
+	// var fwd : Vector3 = thePlayer.forward.normalized;
+	// var other : Vector3 = ( theEnemy.position - thePlayer.position ).normalized;
 	
-	var theProduct : float = Vector3.Dot( fwd, other );
+	// var theProduct : float = Vector3.Dot( fwd, other );
 	
-	if ( theProduct > visibleDotRange )
-	{
-		// Check the Max Distance
-		CheckMaxVisibleRange();
+	// if ( theProduct > visibleDotRange )
+	// {
 		
-		if ( isInRange )
-		{
-			// Linecast to check for occlusion
-			var hit : RaycastHit;
+	if ( isInRange )
+	{
+		// Linecast to check for occlusion
+		var hit : RaycastHit;
 			
-			if ( Physics.Linecast( theEnemy.position + (Vector3.up * 1.75) + theEnemy.forward, thePlayer.position, hit ) )
+		if ( Physics.Linecast( theEnemy.position, thePlayer.position, hit ) )
+		{
+			Debug.Log( "Enemy sees " + hit.collider.gameObject.name );
+
+			if ( hit.collider.gameObject.name == "Player" && isGrounded)
 			{
-				Debug.Log( "Enemy sees " + hit.collider.gameObject.name );
-				
-				if ( hit.collider.gameObject.name == "Player" )
-				{
-					isVisible = true;
-				}
+				isVisible = true;
+			}
+			else 
+			{
+				isVisible = false;
 			}
 		}
-		else
+		else 
 		{
 			isVisible = false;
 		}
@@ -237,27 +303,20 @@ function CheckIfVisible()
 }
 
 
-function CheckDistance() 
+function CheckFollowDistance() 
 {
 	var sqrDist : float = (theEnemy.position - thePlayer.position).sqrMagnitude;
 	var sqrFollowDist : float = followDistance * followDistance;
 	
 	if ( sqrDist < sqrFollowDist )
 	{
-		isInRange = true;
+		isVeryClose = true;
 	}
 	else
 	{
-		isInRange = false;
+		isVeryClose = false;
 	}	
 }
-
-
-function ReduceDistance() 
-{
-	followDistance -= reduceDistAmt;
-}
-
 
 function CheckMaxVisibleRange() 
 {
@@ -275,4 +334,70 @@ function CheckMaxVisibleRange()
 }
 
 
+function CheckMaxHittingRange() 
+{
+	var sqrDist : float = (theEnemy.position - thePlayer.position).sqrMagnitude;
+	var sqrMaxDist : float = maxHittingDistance * maxHittingDistance;
+	
+	if ( sqrDist < sqrMaxDist )
+	{
+		isNearby = true;
+	}
+	else
+	{
+		isNearby = false;
+	}	
+}
+
+
+function IsGrounded() 
+{	
+	// var counter = 0;
+    // var hit1: RaycastHit;
+    // isGrounded = false;
+	// if (Physics.Raycast(Vector3(theEnemy.position.x+0.5, 10, theEnemy.position.z-0.5), Vector3(0, -1, 0), hit1, 20.0)) {
+		// if (hit1.collider.gameObject.name == "Terrain") {
+			// counter++;
+			// var hit2: RaycastHit;
+			// if(Physics.Raycast(Vector3(theEnemy.position.x+0.5, 10, theEnemy.position.z+0.5), Vector3(0, -1, 0), hit2, 20.0)) {
+				// if (hit2.collider.gameObject.name == "Terrain") {
+					// counter++;
+					// var hit3: RaycastHit;
+					// if(Physics.Raycast(Vector3(theEnemy.position.x-0.5, 10, theEnemy.position.z+0.5), Vector3(0, -1, 0), hit3, 20.0)) {
+						// if (hit3.collider.gameObject.name == "Terrain") {
+							// counter++;
+							// var hit4: RaycastHit;
+							// if(Physics.Raycast(Vector3(theEnemy.position.x-0.5, 10, theEnemy.position.z-0.5), Vector3(0, -1, 0), hit4, 20.0)) {
+								// if (hit4.collider.gameObject.name == "Terrain") {
+									// counter++;
+								// }
+							// }
+						// }
+					// }
+				// }
+			// }
+		// }
+	// }
+	
+	// isGrounded = (counter > 0);
+	// return isGrounded;
+	
+	var hit: RaycastHit;
+	isGrounded = false;
+	
+	if (Physics.Raycast(Vector3(theEnemy.position.x, 10, theEnemy.position.z), Vector3(0, -1, 0), hit, 20.0)) {
+		if (hit.collider.gameObject.name != "Maze" && hit.collider.gameObject.name != "Tank" &&
+			hit.collider.gameObject.name != "Truck" && hit.collider.gameObject.name != "polySurface73" && 
+			hit.collider.gameObject.name != "tomb_litle_ae.1" && hit.collider.gameObject.name != "Crate" && 
+			hit.collider.gameObject.name != "Crate 1" && hit.collider.gameObject.name != "Crate 2" &&
+			hit.collider.gameObject.name != "Crate 3" && hit.collider.gameObject.name != "Crate 4" &&
+			hit.collider.gameObject.name != "Crate 5" && hit.collider.gameObject.name != "Crate 6") {
+			isGrounded = true;
+		}
+	}
+}
+
+function IncreaseSpeed() {
+	speed += 0.1;
+}
 
