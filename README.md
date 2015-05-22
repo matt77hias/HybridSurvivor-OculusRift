@@ -11,7 +11,7 @@ Team:
 Running:
 * Oculus Runtime for Windows (tested on version 0.4.4-beta)
 
-Recommonded:
+Recommended:
 * Skype
 * MorphVOX Pro
 
