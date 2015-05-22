@@ -7,6 +7,7 @@ Course Capita Selecta Human Computer Interaction and Multimedia: Game Design: Hy
 
 Running:
 * Oculus Runtime for Windows (tested on version 0.4.4-beta)
+
 Recommonded:
 * Skype
 * MorphVOX Pro
