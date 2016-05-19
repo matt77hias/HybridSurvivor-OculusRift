@@ -12,7 +12,7 @@ Use
 --------
 
 Running:
-* Oculus Runtime for Windows (tested on version 0.4.4-beta)
+* Oculus Runtime for Windows (version 0.5.0-beta)
 
 Recommended:
 * Skype
