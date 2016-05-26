@@ -10,7 +10,7 @@ Team:
 
 Use
 --------
-<img src="https://github.com/matt77hias/HybridSurvivor/blob/master/Mazes/Hybrid%20Survivor_Easy.jpg" width="430"> <img src="https://github.com/matt77hias/HybridSurvivor/blob/master/Mazes/Hybrid%20Survivor_Pro.jpg" width="430">
+<img src="https://github.com/matt77hias/HybridSurvivor/blob/master/Mazes/Hybrid%20Survivor_Easy.jpg" width="431"> <img src="https://github.com/matt77hias/HybridSurvivor/blob/master/Mazes/Hybrid%20Survivor_Pro.jpg" width="431">
 
 Running:
 * Oculus Runtime for Windows (version 0.5.0-beta)
