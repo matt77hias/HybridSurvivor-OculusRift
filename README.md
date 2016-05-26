@@ -10,6 +10,8 @@ Team:
 
 Use
 --------
+<p align="center"><img src="https://github.com/matt77hias/FlowGridVisualization/blob/master/res/Hybrid%20Survivor_Easy.jpg" ></p>
+<p align="center"><img src="https://github.com/matt77hias/FlowGridVisualization/blob/master/res/Hybrid%20Survivor_Hard.jpg" ></p>
 
 Running:
 * Oculus Runtime for Windows (version 0.5.0-beta)
