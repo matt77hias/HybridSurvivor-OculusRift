@@ -3,10 +3,12 @@ HybridSurvivor
 
 Course Capita Selecta Human Computer Interaction and Multimedia: Game Design: Hybrid Survivor
 
-Team:
+**Team**:
 * [Matthias Moulin](https://github.com/matt77hias) (Computer Science)
 * [Milan Samyn](https://github.com/MilanSamyn) (Computer Science)
 * [Samuel Lannoy](https://github.com/SamuelLannoy) (Computer Science)
+
+**Academic Year**: 2014-2015 (2nd semester - 2nd Master of Science in Engineering: Computer Science)
 
 Use
 --------
