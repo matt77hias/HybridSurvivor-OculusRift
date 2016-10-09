@@ -1,4 +1,4 @@
-# HybridSurvivor for Oculus Rift
+# [HybridSurvivor](https://github.com/matt77hias/HybridSurvivor) for Oculus Rift
 
 Course Capita Selecta Human Computer Interaction and Multimedia: Game Design: Hybrid Survivor
 
